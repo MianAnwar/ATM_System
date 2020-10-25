@@ -67,10 +67,20 @@ namespace ATM_DLL
             return count;
         }
 
-        public void setFirstLineCount(int count, string FileName)
-        {
-            string file = Path.Combine(Environment.CurrentDirectory, FileName);
 
+
+        public void incrementCount(string FileName)
+        {
+            (int count, List<string> users) = GetStringListofUsers(FileName);
+
+            if (count > 0 && users != null)
+            {
+                count = count + 1;
+                writeBacktoFile(count, users, FileName);            }
+            else
+            {
+                Console.WriteLine("There is some error, please contact Developer");
+            }
         }
 
         (int, List<string>) GetStringListofUsers(string fileName)
@@ -113,14 +123,14 @@ namespace ATM_DLL
                 {
                     string[] data = l.Split(',');
                     Users user = new Users();       ///// userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
-                    user.UserId = data[0];
-                    user.PinCode = data[1];
-                    user.UserPosition = data[2].Equals("1") ? true : false;  // true(1)-Customer and False(0)-Admin
-                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
+                    user.UserId = data[1];
+                    user.PinCode = data[2];
+                    user.UserPosition = data[3].Equals("1") ? true : false;  // true(1)-Customer and False(0)-Admin
+                    user.Status = data[4].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     if (userId.Equals(user.UserId))
                     {
-                        int ret = data[3].Equals("1") ? 1 : data[3].Equals("0") ? 0 : -1; // true(1)-Active,    false(0)-Disabled
+                        int ret = data[4].Equals("1") ? 1 : data[3].Equals("0") ? 0 : -1; // true(1)-Active,    false(0)-Disabled
                                                                                           // Console.WriteLine("->" + user.Status + "->" +ret);
                         return ret;
                     }
@@ -140,10 +150,10 @@ namespace ATM_DLL
                 {
                     string[] data = l.Split(',');
                     Users user = new Users();
-                    user.UserId = data[0];
-                    user.PinCode = data[1];
-                    user.UserPosition = data[2].Equals("1") ? true : false;  // true-Customer and False-Admin
-                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
+                    user.UserId = data[1];
+                    user.PinCode = data[2];
+                    user.UserPosition = data[3].Equals("1") ? true : false;  // true-Customer and False-Admin
+                    user.Status = data[4].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     if (userId.Equals(user.UserId))
                     {
@@ -167,10 +177,10 @@ namespace ATM_DLL
                 {
                     string[] data = l.Split(',');
                     Users user = new Users();
-                    user.UserId = data[0];
-                    user.PinCode = data[1];
-                    user.UserPosition = (data[2].Equals("1") ? true : false);  // true-Customer and False-Admin
-                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
+                    user.UserId = data[1];
+                    user.PinCode = data[2];
+                    user.UserPosition = (data[3].Equals("1") ? true : false);  // true-Customer and False-Admin
+                    user.Status = data[4].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     if (userId.Equals(user.UserId))
                     {
@@ -209,10 +219,10 @@ namespace ATM_DLL
                 {
                     string[] data = l.Split(',');
                     Users user = new Users();
-                    user.UserId = data[0];
-                    user.PinCode = data[1];
-                    user.UserPosition = data[2].Equals("1") ? true : false;  // true-Customer and False-Admin
-                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
+                    user.UserId = data[1];
+                    user.PinCode = data[2];
+                    user.UserPosition = data[3].Equals("1") ? true : false;  // true-Customer and False-Admin
+                    user.Status = data[4].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     Console.WriteLine(l);
                     Console.WriteLine(user.UserId + user.PinCode);

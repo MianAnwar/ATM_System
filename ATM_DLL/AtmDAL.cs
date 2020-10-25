@@ -16,11 +16,10 @@ namespace ATM_DLL
 
         public int createNewAccount(Customer c)
         {
-           int Current_Accounts_Count = GetCountof(usersFile);  //0=1000, 1=1001...
-            int newAccountNo=-1;
-
-            if (Current_Accounts_Count != -1)  
-                newAccountNo = Current_Accounts_Count + 1000;
+           int Current_Accounts_Count = GetCountof(usersFileName);  //0=1000, 1=1001...
+            int newAccountNo;
+  
+                newAccountNo = Current_Accounts_Count * 1000;
 
             c.AccountNo = newAccountNo;
 
@@ -28,8 +27,10 @@ namespace ATM_DLL
             int type = c.AccountType.Equals("saving") ? 0 : 1;
             string acc = $"{Current_Accounts_Count+1},{c.AccountNo},{c.AccountHolderName},{type},{c.AccountBalance}";
 
-     // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
-            string credentials = $"{Current_Accounts_Count+1},{c.UserId},{c.PinCode},{c.UserPosition},{c.Status}";
+            // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
+            int pos = c.UserPosition ? 1 : 0;
+            int stat = c.Status.Equals("active") ? 1 : 0;
+            string credentials = $"{Current_Accounts_Count+1},{c.UserId},{c.PinCode},{pos},{stat}";
 
             string usersFile = Path.Combine(Environment.CurrentDirectory, usersFileName);
             string CustomerFile = Path.Combine(Environment.CurrentDirectory, custFileName);
@@ -43,8 +44,11 @@ namespace ATM_DLL
                 srCust.WriteLine(acc);
                 srUser.WriteLine(credentials);
 
-                setFirstLineCount(Current_Accounts_Count + 1, usersFileName);
-                setFirstLineCount(Current_Accounts_Count + 1, usersFileName);
+                Console.WriteLine("asdasdsaaaaaaaaaaa11111111");
+
+                incrementCount(usersFileName);
+                incrementCount(custFileName);
+
             }
             catch
             {
