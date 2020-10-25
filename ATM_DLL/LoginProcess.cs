@@ -8,9 +8,9 @@ namespace ATM_DLL
 {
     public class LoginProcess
     {
-        string custFileName = "customer.csv";
-        string usersFileName = "users.csv";
-        string transactionFileName = "transaction.csv";
+        protected string custFileName = "customer.csv";
+        protected string usersFileName = "users.csv";
+        protected string transactionFileName = "transaction.csv";
 
         public void SetUpSystem()
         {
@@ -19,7 +19,7 @@ namespace ATM_DLL
             {
                 StreamWriter sr = new StreamWriter(customerFile);
                 sr.WriteLine(1);
-                sr.WriteLine("11221,Ali,0,5000");    // accountNo = 11221, AccountHolderName = Ali, Type=Saving(0), Balance=5000
+                sr.WriteLine("1,11221,Ali,0,5000");    // accountNo = 11221, AccountHolderName = Ali, Type=Saving(0), Balance=5000
                 sr.Close();
             }
 
@@ -27,8 +27,9 @@ namespace ATM_DLL
             if (!File.Exists(usersFile))
             {
                 StreamWriter sr = new StreamWriter(usersFile, append: true);
-                sr.WriteLine(1);
-                sr.WriteLine("admin,11221,0,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
+                sr.WriteLine(2);
+                sr.WriteLine("0,admin,11221,0,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
+                sr.WriteLine("1,ali11,12133,1,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
                 sr.Close();
             }
 
@@ -41,6 +42,8 @@ namespace ATM_DLL
                 sr.Close();                                 //                  0-withdraw, 1-Deposit, 2-Transfer
             }
         }
+
+
 
         public int GetCountof(string fileName)
         {
@@ -62,6 +65,12 @@ namespace ATM_DLL
             }
 
             return count;
+        }
+
+        public void setFirstLineCount(int count, string FileName)
+        {
+            string file = Path.Combine(Environment.CurrentDirectory, FileName);
+
         }
 
         (int, List<string>) GetStringListofUsers(string fileName)
