@@ -1,0 +1,13 @@
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_BLL.deps.json
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_BLL.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_BLL.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\obj\Debug\netcoreapp2.0\ATM_BLL.csproj.CoreCompileInputs.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\obj\Debug\netcoreapp2.0\ATM_BLL.AssemblyInfoInputs.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\obj\Debug\netcoreapp2.0\ATM_BLL.AssemblyInfo.cs
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\obj\Debug\netcoreapp2.0\ATM_BLL.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\obj\Debug\netcoreapp2.0\ATM_BLL.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\obj\Debug\netcoreapp2.0\ATM_BLL.csprojResolveAssemblyReference.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_BObjects.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_BObjects.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_DLL.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BLL\bin\Debug\netcoreapp2.0\ATM_DLL.pdb

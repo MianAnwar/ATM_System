@@ -1,0 +1,19 @@
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM System.deps.json
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM System.runtimeconfig.json
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM System.runtimeconfig.dev.json
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM System.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM System.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\obj\Debug\netcoreapp2.0\ATM System.csproj.CoreCompileInputs.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\obj\Debug\netcoreapp2.0\ATM System.AssemblyInfoInputs.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\obj\Debug\netcoreapp2.0\ATM System.AssemblyInfo.cs
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\obj\Debug\netcoreapp2.0\ATM System.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\obj\Debug\netcoreapp2.0\ATM System.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_VIEW.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_VIEW.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\obj\Debug\netcoreapp2.0\ATM System.csprojResolveAssemblyReference.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_BLL.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_BLL.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_BObjects.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_BObjects.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_DLL.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM System\bin\Debug\netcoreapp2.0\ATM_DLL.pdb

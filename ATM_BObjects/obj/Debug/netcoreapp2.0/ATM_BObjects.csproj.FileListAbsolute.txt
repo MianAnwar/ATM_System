@@ -1,0 +1,9 @@
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\bin\Debug\netcoreapp2.0\ATM_BObjects.deps.json
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\bin\Debug\netcoreapp2.0\ATM_BObjects.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\bin\Debug\netcoreapp2.0\ATM_BObjects.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\obj\Debug\netcoreapp2.0\ATM_BObjects.csproj.CoreCompileInputs.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\obj\Debug\netcoreapp2.0\ATM_BObjects.AssemblyInfoInputs.cache
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\obj\Debug\netcoreapp2.0\ATM_BObjects.AssemblyInfo.cs
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\obj\Debug\netcoreapp2.0\ATM_BObjects.dll
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\obj\Debug\netcoreapp2.0\ATM_BObjects.pdb
+D:\UNIVERSITY DATA 1-7\Final Year\Semester 7\3 Enterprise Application Development EAD\Assignment1 ATM\ATM System\ATM_BObjects\obj\Debug\netcoreapp2.0\ATM_BObjects.csprojResolveAssemblyReference.cache

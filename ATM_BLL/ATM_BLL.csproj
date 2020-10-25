@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ATM_BObjects\ATM_BObjects.csproj" />
+    <ProjectReference Include="..\ATM_DLL\ATM_DLL.csproj" />
+  </ItemGroup>
+
+</Project>
