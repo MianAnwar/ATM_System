@@ -140,7 +140,7 @@ namespace ATM_VIEW
                 AccountHolderName = holderName,
                 AccountType = type,
                 AccountBalance = balance,
-                AccountStatus = status,
+                Status = status,
             };
 
             return cust;
@@ -207,7 +207,7 @@ namespace ATM_VIEW
                 PinCode = pinCode,
                 AccountHolderName = holderName,
                 AccountType = type,
-                AccountStatus = status,
+                Status = status,
             };
         }
     }

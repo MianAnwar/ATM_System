@@ -109,6 +109,7 @@ namespace ATM_VIEW
             }
             else if (c == 2)       ////////////////////< 2-Admin >////////////////////
             {
+                AdminAgain:
                 menus.MenuHeader(); // display header
                 menus.AdminMenu();   // display Admin Menu
 
@@ -117,23 +118,32 @@ namespace ATM_VIEW
                 if (choice == 1)   // create new Account
                 {
                     continueToCreateNewAccount();
+                    ReadKey();
+                    goto AdminAgain;
                 }
                 else if (choice == 2) // Delete Existing Account
                 {
                     ContinueToDeleteAccount();
+                    ReadKey();
+                    goto AdminAgain;
                 }
                 else if (choice == 3) // Update Account Information
                 {
                    ContinueToUpdateAccount();
-                    goto again;
+                    ReadKey();
+                    goto AdminAgain;
                 }
                 else if (choice == 4)    // Search for Account
                 {
-                  //  ContinueToSearchAccount();
+                    //  ContinueToSearchAccount();
+                    ReadKey();
+                    goto AdminAgain;
                 }
                 else if (choice == 5)    // View Reports
                 {
-                   // ContinueToViewReports();
+                    // ContinueToViewReports();
+                    ReadKey();
+                    goto AdminAgain;
                 }
                 else if (choice == 6) // logout- EXit
                 {

@@ -8,7 +8,6 @@ namespace ATM_VIEW
 {
     public class SystemUsersFunctionalityView: AdminFunctionalityView
     {
-     //   ATMProgramBLL bll = new ATMProgramBLL();
         /// <summary>
         ///     Customer functionality for ATM_VIEW Layer
         /// </summary>
@@ -95,12 +94,35 @@ namespace ATM_VIEW
             }
         }
 
+
+        /////// transfer cash
         public void ContinueToTransferCash(string currentUserId)
         {
-            int amountTodeposit = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter the cash amount to deposit: "));
-            int accountNo = bll.getAccountNo(currentUserId);
-            if (bll.depositAmount(accountNo, amountTodeposit))
-                WriteLine("Cash Trasfered Successfully!");
+            enterAgmin:
+            int amountToTransfer = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter amount in multiple of 500: "));
+            if (amountToTransfer % 500 != 0)
+                goto enterAgmin;
+
+            int accountNo1 = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter the account number to which you want to transfer: "));
+
+            string name = bll.getAccountHolderNameWithAccountNo(accountNo1);
+            if(name=="")
+            {
+                WriteLine("No such Account Number exits.");
+                return;
+            }
+
+            int accountNo2 = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, $"You wish to deposit Rs. {amountToTransfer} in account held by Mr. {name}; If this information is correct please re-enter the account number: "));
+
+            if (accountNo1 == accountNo2)
+            {
+                string msg = bll.TransferAmountTo(accountNo1, amountToTransfer, currentUserId) ? "Transaction Confirmed Successfully" : "Some Error has occurred while performing the operation.";
+                WriteLine(msg);
+            }
+            else
+            {
+                WriteLine("Alas! You re-entered account number doesn't match. Press Any Key to go to main menu.");
+            }
         }
 
         public void ContinueToViewBalance(string currentUserId)

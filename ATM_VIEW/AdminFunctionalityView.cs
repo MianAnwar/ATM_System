@@ -31,11 +31,20 @@ namespace ATM_VIEW
         {
             int accountNo1 = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter the account number to which you want to delete: "));
             string name = bll.getAccountHolderNameWithAccountNo(accountNo1);
+            if (name == "")
+            {
+                WriteLine("No such Account Number exits.");
+                return;
+            }
             int accountNo2 = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, $"You wish to delete the account held by Mr. {name}; If this information is correct please re-enter the account number: "));
             if (accountNo1 == accountNo2)
             {
                 string msg = bll.deleteAccount(accountNo1) ? "Account Deleted Successfully" : "Some Error has occurred while performing the operation.";
                 WriteLine(msg);
+            }
+            else
+            {
+                WriteLine("Alas! You re-entered account number doesn't match. Press Any Key to go to main menu.");
             }
         }
 
@@ -50,7 +59,9 @@ namespace ATM_VIEW
                 OutputHandlerToConsole.DisplayCustoemr(c);
             }
 
+            ForegroundColor = ConsoleColor.DarkMagenta;
             Write("Please enter in the fields you wish to update(leave blank otherwise): ");
+            ForegroundColor = ConsoleColor.White;
 
             Customer updatedCustomer = InputHandlerFromConsole.GetFieldsForUpdatingAccount(accountNo);
 
@@ -69,8 +80,8 @@ namespace ATM_VIEW
 
             updatedCustomer.AccountBalance = c.AccountBalance;
 
-            if (updatedCustomer.AccountStatus == "")
-                updatedCustomer.AccountStatus = c.AccountStatus;
+            if (updatedCustomer.Status == "")
+                updatedCustomer.Status = c.Status;
 
             OutputHandlerToConsole.DisplayCustoemr(updatedCustomer);
 

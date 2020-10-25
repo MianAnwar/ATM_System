@@ -17,8 +17,10 @@ namespace ATM_DLL
             string customerFile = Path.Combine(Environment.CurrentDirectory, custFileName);
             if (!File.Exists(customerFile))
             {
-                File.Create(customerFile);
-               
+                StreamWriter sr = new StreamWriter(customerFile);
+                sr.WriteLine(1);
+                sr.WriteLine("11221,Ali,0,5000");    // accountNo = 11221, AccountHolderName = Ali, Type=Saving(0), Balance=5000
+                sr.Close();
             }
 
             string usersFile = Path.Combine(Environment.CurrentDirectory, usersFileName);
@@ -32,9 +34,18 @@ namespace ATM_DLL
 
             string transactionFile = Path.Combine(Environment.CurrentDirectory, transactionFileName);
             if (!File.Exists(transactionFile))
-                File.Create(transactionFile);
-
+            {
+                StreamWriter sr = new StreamWriter(transactionFile);
+                sr.WriteLine(1);
+                sr.WriteLine("11221,0,500,15/10/2020");    // accountNo = 11221, TransactionType = 0, Type=Saving(0), Balance=5000
+                sr.Close();                                 //                  0-withdraw, 1-Deposit, 2-Transfer
+            }
         }
+
+
+
+
+
 
         public int GetCountof(string fileName)
         {
@@ -43,7 +54,7 @@ namespace ATM_DLL
             StreamReader sr = null;
             try
             {
-                sr = new StreamReader(usersFile);
+                sr = new StreamReader(fileName);
                 count = Convert.ToInt32(sr.ReadLine());
             }
             catch
@@ -58,7 +69,7 @@ namespace ATM_DLL
             return count;
         }
 
-        (int, List<string>) GetStringListof(string fileName)
+        (int, List<string>) GetStringListofUsers(string fileName)
         {
             string usersFile = Path.Combine(Environment.CurrentDirectory, fileName);
             List<string> users = new List<string>();
@@ -84,39 +95,45 @@ namespace ATM_DLL
                 sr.Close();
             }
 
-            return (count, users); //  if status is disabled(0)
-                                   //    return 1; //  if status is Active(1)
-                                   //   return 0; //  if status is notExists(0)
+            return (count, users);
         }
 
 
+        
+        /// <summary>
+        ///     working for layers
+        /// </summary>
+        /// 
         public int checkStatus(string userId)       // 1-Acive and 0-Disabled and -1-NotExists 
         {
-            (int count, List<string> users) = GetStringListof(usersFileName);
+            (int count, List<string> users) = GetStringListofUsers(usersFileName);
 
             if (count>0 && users != null)
             {
                 foreach(string l in users)
                 {
                     string[] data = l.Split(',');
-                    Users user = new Users();
+                    Users user = new Users();       ///// userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
                     user.UserId = data[0];
                     user.PinCode = data[1];
-                    user.UserPosition = data[2]=="1"? true: false;  // true-Customer and False-Admin
-                    user.Status = data[3] == "1" ? true : false;    // true-Active and false-Disabled
+                    user.UserPosition = data[2].Equals("1")? true: false;  // true(1)-Customer and False(0)-Admin
+                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     if (userId.Equals(user.UserId))
                     {
-                        return user.Status ? 1 : 0; // true(1)-Active,    false(0)-Disabled
+                        int ret = data[3].Equals("1") ? 1 : data[3].Equals("0") ? 0 : -1; // true(1)-Active,    false(0)-Disabled
+                       // Console.WriteLine("->" + user.Status + "->" +ret);
+                        return ret;
                     }
                 }
             }
             return -1; //  for NotExists.
         }
 
+
         public int checkPosition(string userId)     // 1-Customer and 2 for Admin
         {
-            (int count, List<string> users) = GetStringListof(usersFileName);
+            (int count, List<string> users) = GetStringListofUsers(usersFileName);
 
             if (count > 0 && users != null)
             {
@@ -127,20 +144,23 @@ namespace ATM_DLL
                     user.UserId = data[0];
                     user.PinCode = data[1];
                     user.UserPosition = data[2].Equals("1") ? true : false;  // true-Customer and False-Admin
-                    user.Status = data[3].Equals("1") ? true : false;    // true-Active and false-Disabled
+                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     if (userId.Equals(user.UserId))
                     {
-                        return user.UserPosition ? 1 : 2; // true(1)-Customer/1    false(0)-Admin/2
+                        int ret= user.UserPosition ? 1 : 2; // true(1)-Customer/1    false(0)-Admin/2
+                        Console.WriteLine("->" + user.Status + "->" + ret);
+                        return ret;
                     }
                 }
             }
             return 0; //  for NotExists.
         }
 
+
         public void setDisabled(string userId)
         {
-            (int count, List<string> users) = GetStringListof(usersFileName);
+            (int count, List<string> users) = GetStringListofUsers(usersFileName);
             List<string> updated_users = new List<string>();
             if (count > 0 && users != null)
             {
@@ -150,27 +170,40 @@ namespace ATM_DLL
                     Users user = new Users();
                     user.UserId = data[0];
                     user.PinCode = data[1];
-                    user.UserPosition = (data[2] == "1" ? true : false);  // true-Customer and False-Admin
-                    user.Status = (data[3] == "1" ? true : false);    // true-Active and false-Disabled
+                    user.UserPosition = (data[2].Equals("1") ? true : false);  // true-Customer and False-Admin
+                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
                     if (userId.Equals(user.UserId))
                     {
-                        user.Status = false;    // set Disabled!                       
+                        user.Status = "disabled";    // set Disabled!                       
                     }
                     int pos = user.UserPosition ? 1 : 0;
-                    int stats = user.Status ? 1 : 0;
+                    int stats = (user.Status).Equals("disabled") ? 0 : 1;
                     string line = $"{user.UserId},{user.PinCode},{pos},{stats}";
                     updated_users.Add(line);
                 }
-                writeBacktoFile(count, updated_users);
+                writeBacktoFile(count, updated_users, usersFileName);
             }
             
         }
 
+        void writeBacktoFile(int count, List<string> users, string file)
+        {
+            string usersFile = Path.Combine(Environment.CurrentDirectory, file);
+            StreamWriter sr = new StreamWriter(usersFile, append: false);
+            sr.WriteLine(count);
+            foreach (string s in users)
+            {
+                sr.WriteLine(s);
+            }
+            sr.Close();
+        }
+
+
 
         public bool verifyPinCode(string userId, string pinCode)
         {
-            (int count, List<string> users) = GetStringListof(usersFileName);
+            (int count, List<string> users) = GetStringListofUsers(usersFileName);
 
             if (count > 0 && users != null)
             {
@@ -180,33 +213,21 @@ namespace ATM_DLL
                     Users user = new Users();
                     user.UserId = data[0];
                     user.PinCode = data[1];
-                    user.UserPosition = data[2] == "1" ? true : false;  // true-Customer and False-Admin
-                    user.Status = data[3] == "1" ? true : false;    // true-Active and false-Disabled
+                    user.UserPosition = data[2].Equals("1") ? true : false;  // true-Customer and False-Admin
+                    user.Status = data[3].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
+
+                    Console.WriteLine(l);
+                    Console.WriteLine(user.UserId + user.PinCode);
 
                     if (userId.Equals(user.UserId) && pinCode.Equals(user.PinCode))
                     {
                         return true; // true(1)-Customer/1    false(0)-Admin/2
-                    }
-                    else
-                    {
-                        return false;
                     }
                 }
             }
             return false; //  for NotExists.
         }
 
-        void writeBacktoFile(int count, List<string> users)
-        {
-            string usersFile = Path.Combine(Environment.CurrentDirectory, usersFileName);
-            StreamWriter sr = new StreamWriter(usersFile, append: false);
-            sr.WriteLine(count);
-            foreach(string s in users)
-            {
-                sr.WriteLine(s);
-            }
-            sr.Close();
-        }
 
         public int createNewAccount(Customer c)
         {
@@ -216,7 +237,7 @@ namespace ATM_DLL
 
         public string getAccountHolderNameWithAccountNo(int accountNo)
         {
-            return "Abke";
+            return "";
         }
 
         public bool DeleteAccount(int accountNo)
@@ -246,6 +267,12 @@ namespace ATM_DLL
         }
 
         public bool DepositAmount(int accountNo, int amountToDeposit)
+        {
+            return true;
+        }
+
+
+        public bool TransferAmountTo(int accountNo, int amountToTransfer, string currentUserId)
         {
             return true;
         }

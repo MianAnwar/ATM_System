@@ -147,5 +147,10 @@ namespace ATM_BLL
         {
             return dal.DepositAmount(accountNo, amountToDeposit);
         }
+
+        public bool TransferAmountTo(int accountNo, int amountToTransfer, string currentUserId)
+        {
+            return dal.TransferAmountTo(accountNo, amountToTransfer, currentUserId);
+        }
     }
 }

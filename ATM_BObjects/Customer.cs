@@ -16,8 +16,6 @@ namespace ATM_BObjects
             this.AccountHolderName = "";
             this.AccountType = "";    // Saving   by-default
             this.AccountBalance = 0;
-            this.AccountStatus="";  // active   by-default
-
         }
 
     
@@ -29,7 +27,6 @@ namespace ATM_BObjects
         private string accountHolderName;
         private string accountType;       // Savings,    Current
         private int accountbalance;    // account holder's balance
-        private string accountStatus;     // Active,   Disabled,
 
 
     /// <summary>
@@ -39,6 +36,5 @@ namespace ATM_BObjects
         public string AccountHolderName { get; set; }
         public string AccountType { get; set; }
         public int AccountBalance { get; set; }
-        public string AccountStatus { get; set; }
     }
 }
