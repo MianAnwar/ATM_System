@@ -53,11 +53,11 @@ namespace ATM_VIEW
             int accountNo = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter the Account Number: "));
             Customer c = bll.getCustomer(accountNo);
             if (c == null)
-                WriteLine("Invalid Account Number!");
-            else
             {
-                OutputHandlerToConsole.DisplayCustoemr(c);
+                WriteLine("Invalid Account Number!");
+                return;
             }
+                OutputHandlerToConsole.DisplayCustoemr(c);
 
             ForegroundColor = ConsoleColor.DarkMagenta;
             Write("Please enter in the fields you wish to update(leave blank otherwise): ");

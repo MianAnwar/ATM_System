@@ -10,7 +10,7 @@ namespace ATM_VIEW
     {
         public static void DisplayCustoemr(Customer c)
         {
-            WriteLine($"Account No.: {c.AccountNo}");
+            WriteLine($"\nAccount No: {c.AccountNo}");
             WriteLine($"Login: {c.UserId}");
             WriteLine($"Pin Code: {c.PinCode}");
             WriteLine($"Account Holder Name: {c.AccountHolderName}");

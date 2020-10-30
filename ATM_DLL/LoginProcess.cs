@@ -27,9 +27,8 @@ namespace ATM_DLL
             if (!File.Exists(usersFile))
             {
                 StreamWriter sr = new StreamWriter(usersFile, append: true);
-                sr.WriteLine(2);
+                sr.WriteLine(1);
                 sr.WriteLine("0,admin,11221,0,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
-                sr.WriteLine("1,ali11,12133,1,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
                 sr.Close();
             }
 
@@ -44,7 +43,7 @@ namespace ATM_DLL
         }
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////
         public int GetCountof(string fileName)
         {
             string usersFile = Path.Combine(Environment.CurrentDirectory, fileName);
@@ -68,7 +67,6 @@ namespace ATM_DLL
         }
 
 
-
         public void incrementCount(string FileName)
         {
             (int count, List<string> users) = GetStringListofUsers(FileName);
@@ -79,11 +77,11 @@ namespace ATM_DLL
                 writeBacktoFile(count, users, FileName);            }
             else
             {
-                Console.WriteLine("There is some error, please contact Developer");
+                Console.WriteLine("There is some error, while incrementing count of file, please contact Developer");
             }
         }
 
-        (int, List<string>) GetStringListofUsers(string fileName)
+        public (int, List<string>) GetStringListofUsers(string fileName)
         {
             string usersFile = Path.Combine(Environment.CurrentDirectory, fileName);
             List<string> users = new List<string>();
@@ -196,7 +194,7 @@ namespace ATM_DLL
 
         }
 
-        void writeBacktoFile(int count, List<string> users, string file)
+        public void writeBacktoFile(int count, List<string> users, string file)
         {
             string usersFile = Path.Combine(Environment.CurrentDirectory, file);
             StreamWriter sr = new StreamWriter(usersFile, append: false);
@@ -224,8 +222,8 @@ namespace ATM_DLL
                     user.UserPosition = data[3].Equals("1") ? true : false;  // true-Customer and False-Admin
                     user.Status = data[4].Equals("1") ? "active" : "disabled";    // true-Active and false-Disabled
 
-                    Console.WriteLine(l);
-                    Console.WriteLine(user.UserId + user.PinCode);
+                 //   Console.WriteLine(l);
+                 //   Console.WriteLine(user.UserId + user.PinCode);
 
                     if (userId.Equals(user.UserId) && pinCode.Equals(user.PinCode))
                     {
@@ -236,5 +234,6 @@ namespace ATM_DLL
             return false; //  for NotExists.
         }
 
+ ///////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

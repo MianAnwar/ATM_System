@@ -13,7 +13,7 @@ namespace ATM_BObjects
         {
             this.UserId = "";
             this.PinCode = "";
-            this.UserPosition = false;   // customer(0)   by-default
+            this.UserPosition = true;   // customer(1)   by-default
             this.Status = "";    // Acive(1) or Disabled(0)
         }
 
