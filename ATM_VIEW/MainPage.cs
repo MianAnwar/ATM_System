@@ -141,9 +141,20 @@ namespace ATM_VIEW
                 }
                 else if (choice == 5)    // View Reports
                 {
-                    // ContinueToViewReports();
-                    ReadKey();
-                    goto AdminAgain;
+                    menus.ViewReportMenu();
+                    int? viewChoice = InputHandlerFromConsole.GetNumberInRange(1, 2, "Select one of the choice: ");
+                    if (viewChoice == 1)    // by Balance amount
+                    {
+                        ContinueToViewCustomersReports();
+                        ReadKey();
+                        goto AdminAgain;
+                    }
+                    else if (viewChoice == 2)   // by date
+                    {
+                        ContinueToViewTransactionReports();
+                        ReadKey();
+                        goto AdminAgain;
+                    }
                 }
                 else if (choice == 6) // logout- EXit
                 {

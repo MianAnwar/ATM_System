@@ -99,14 +99,43 @@ namespace ATM_VIEW
         {
             Customer c = InputHandlerFromConsole.GetFieldsForSearchingAccounts();
             List<string> result = new List<string>();
-            WriteLine("\n==== SEARCH RESULT ====");
+            WriteLine("\n==== SEARCH RESULTs ====");
             WriteLine("Account ID \t User ID \t Holder Name \t\t Type \t\t Balance \t Status");
             result = bll.getSearchResult(c);
             foreach (string res in result)
             {
                 WriteLine(res);
             }
+        }
 
+        public void ContinueToViewCustomersReports()
+        {
+            int minBalance = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(0, int.MaxValue, "Enter minimum amount: "));
+            int maxBalance = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(minBalance, int.MaxValue, "Enter minimum amount: "));
+
+            List<string> result = new List<string>();
+            WriteLine("\n==== SEARCH RESULTs ====");
+            WriteLine("Account ID \t User ID \t Holder Name \t\t Type \t\t Balance \t Status");
+            result = bll.getSearchResultBTbalance(minBalance, maxBalance);
+            foreach (string res in result)
+            {
+                WriteLine(res);
+            }
+        }
+
+        public void ContinueToViewTransactionReports()
+        {
+            string startingDate = InputHandlerFromConsole.GetDate("Enter the starting date (dd/mm/yyyy): ");
+            string endingDate = InputHandlerFromConsole.GetDate("Enter the ending date (dd/mm/yyyy): ");
+
+            List<string> result = new List<string>();
+            WriteLine("\n==== SEARCH RESULTs ====");
+            WriteLine("Transaction Type \t User ID \t Holder Name \t\t Type \t\t Amount \t Date");
+            result = bll.getSearchResultBTdates(startingDate, endingDate);
+            foreach (string res in result)
+            {
+                WriteLine(res);
+            }
         }
     }
 }

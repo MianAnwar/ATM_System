@@ -219,17 +219,122 @@ namespace ATM_DLL
             return false;
         }
 
+        //////////////      //////////////      //////////////
         public List<string> getSearchResult(Customer c)
         {
             List<string> result = new List<string>();
+            (int count, List<string> customers) = GetStringListofUsers(custFileName);
+            (int users_count, List<string> users) = GetStringListofUsers(usersFileName);
 
-            return result;
+            if (count > 0 && customers != null)
+            {
+                foreach (string l in customers) // srNo, AccNo, Name, type, balance
+                {
+                    string[] data = l.Split(',');
+                    if ((c.AccountNo.Equals(Convert.ToInt32(data[1]))))
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                foreach (string u in users) // srNo, userId, Pincode, position, status
+                {
+                    string[] udata = u.Split(',');
+                    if (!(c.AccountNo.Equals(Convert.ToInt32(udata[0]))))
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                return result;
+            }
+            return null;
         }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
+        public List<string> getSearchResultBTbalance(int minBalance, int maxBalance)
+        {
+            List<string> result = new List<string>();
+            (int count, List<string> customers) = GetStringListofUsers(custFileName);
+            (int users_count, List<string> users) = GetStringListofUsers(usersFileName);
+
+            if (count > 0 && customers != null)
+            {
+                foreach (string l in customers) // srNo, AccNo, Name, type, balance
+                {
+                    string[] data = l.Split(',');
+                    if ((c.AccountNo.Equals(Convert.ToInt32(data[1]))))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                foreach (string u in users) // srNo, userId, Pincode, position, status
+                {
+                    string[] udata = u.Split(',');
+                    if (!(c.AccountNo.Equals(Convert.ToInt32(udata[0]))))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                return result;
+            }
+            return null;
+        }
+
+        public List<string> getSearchResultBTdates(string startingDate, string endingDate)
+        {
+            List<string> result = new List<string>();
+            (int count, List<string> customers) = GetStringListofUsers(custFileName);
+            (int users_count, List<string> users) = GetStringListofUsers(usersFileName);
+
+            if (count > 0 && customers != null)
+            {
+                foreach (string l in customers) // srNo, AccNo, Name, type, balance
+                {
+                    string[] data = l.Split(',');
+                    if ((c.AccountNo.Equals(Convert.ToInt32(data[1]))))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                foreach (string u in users) // srNo, userId, Pincode, position, status
+                {
+                    string[] udata = u.Split(',');
+                    if (!(c.AccountNo.Equals(Convert.ToInt32(udata[0]))))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                return result;
+            }
+            return null;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         public int GetBalance(int accountNo)
         {
             (int count, List<string> customers) = GetStringListofUsers(custFileName);
@@ -271,6 +376,20 @@ namespace ATM_DLL
 //////////////////////////////////////////////////////////////////////////////////////////////////
         public bool DepositAmount(int accountNo, int amountToDeposit)
         {
+            bool res = doDepositAmount(accountNo, amountToDeposit);
+
+            Transaction wT = new Transaction();
+            wT.AccountNo = accountNo;
+            wT.TransactionType = 1; // 1 for deposit
+            wT.TransactionAmount = amountToDeposit;
+            wT.TransactionDate = DateTime.Now.ToString();
+            saveTransaction(wT);
+
+            return res;
+        }
+
+        bool doDepositAmount(int accountNo, int amountToDeposit)
+        {
             Customer c = getCustomer(accountNo);
             c.AccountBalance += amountToDeposit;
             return UpdateCustomer(c);
@@ -280,8 +399,23 @@ namespace ATM_DLL
 //////////////////////////////////////////////////////////////////////////////////////////////////
         public bool TransferAmountTo(int accountNo, int amountToTransfer, string currentUserId)
         {
-            withdrawAmount(amountToTransfer, currentUserId);
-            return DepositAmount(accountNo, amountToTransfer);
+            int from = getAccountNo(currentUserId);
+            if(from==accountNo)
+            {
+                return false;
+            }
+            doWithdrawAmount(from, amountToTransfer);
+            bool res = doDepositAmount(accountNo, amountToTransfer);
+
+            Transaction wT = new Transaction();
+            wT.AccountNo = from;
+            wT.TransactionType = 2; // 2 for Transfer
+            wT.TransactionAmount = amountToTransfer;
+            wT.TransactionDate = DateTime.Now.ToString();
+            wT.To = accountNo;
+            saveTransaction(wT);
+
+            return res;
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -305,9 +439,57 @@ namespace ATM_DLL
         public void withdrawAmount(int amount, string userId)
         {
             int accountNo = getAccountNo(userId);
+            doWithdrawAmount(accountNo, amount);
+
+            Transaction wT = new Transaction();
+            wT.AccountNo = accountNo;
+            wT.TransactionType = 0; // 0 for Withdraw
+            wT.TransactionAmount = amount;
+            wT.TransactionDate = DateTime.Now.ToString();
+            saveTransaction(wT);
+        }
+
+        void doWithdrawAmount(int accountNo, int amount)
+        {
             Customer c = getCustomer(accountNo);
             c.AccountBalance -= amount;
             UpdateCustomer(c);
+        }
+
+        public void saveTransaction(Transaction trans)
+        {
+            int trans_Count = GetCountof(transactionFileName);  //0=1000, 1=1001...
+            int newTransNo;
+            newTransNo = trans_Count + 1;
+
+            // accountNo = 11221, TransactionType = 0, Amount=5000, Date=12/09/2020, To=accNo
+            string tran_detail ="";
+            if (trans.TransactionType == 2) // if transaction is of 'Transfer Type'
+            {
+                tran_detail = $"{trans.AccountNo},{trans.TransactionType},{trans.TransactionAmount},{trans.TransactionDate},{trans.To}";
+            }
+            else
+            {
+                tran_detail = $"{trans.AccountNo},{trans.TransactionType},{trans.TransactionAmount},{trans.TransactionDate}";
+            }
+
+            string tranFile = Path.Combine(Environment.CurrentDirectory, transactionFileName);
+            StreamWriter srTrans = null;
+            try
+            {
+                srTrans = new StreamWriter(tranFile, append: true);
+                srTrans.WriteLine(tran_detail);
+            }
+            catch
+            {
+                Console.WriteLine("Exception at updating transaction history file.");
+            }
+            finally
+            {
+                srTrans.Close();
+                incrementCount(transactionFileName);
+            }
+            return;
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

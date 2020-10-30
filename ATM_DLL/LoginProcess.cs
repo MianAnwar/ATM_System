@@ -38,8 +38,8 @@ namespace ATM_DLL
             {
                 StreamWriter sr = new StreamWriter(transactionFile);
                 sr.WriteLine(1);
-                sr.WriteLine("11221,0,500,15/10/2020");    // accountNo = 11221, TransactionType = 0, Type=Saving(0), Balance=5000
-                sr.Close();                                 //                  0-withdraw, 1-Deposit, 2-Transfer
+                sr.WriteLine("1,2,500,15-Oct-20, 2");    // accountNo = 11221, TransactionType = 0, Amount=5000, Date=12/09/2020, To=accNo
+                sr.Close();                                 //              0-withdraw, 1-Deposit, 2-Transfer
             }
         }
 
@@ -89,11 +89,9 @@ namespace ATM_DLL
             string usersFile = Path.Combine(Environment.CurrentDirectory, fileName);
             List<string> users = new List<string>();
             int count = 0;
-            StreamReader sr = null;
+            StreamReader sr = new StreamReader(usersFile);
             try
             {
-                sr = new StreamReader(usersFile);
-
                 count = Convert.ToInt32(sr.ReadLine());
                 string user = String.Empty;
                 while ((user = sr.ReadLine()) != null)

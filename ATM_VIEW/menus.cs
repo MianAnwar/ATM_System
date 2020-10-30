@@ -101,6 +101,12 @@ namespace ATM_VIEW
             WriteLine("7----> 20,000");
         }
 
+        public static void ViewReportMenu()
+        {
+            WriteLine("1----> Accounts by Balance Amount");
+            WriteLine("2----> Accounts by Date");
+        }
+
 
         //3/////////////////////////////////////////////////////////////////////////////////////////
         /*

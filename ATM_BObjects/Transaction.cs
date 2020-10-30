@@ -16,6 +16,7 @@ namespace ATM_BObjects
             this.TransactionType = 1;   // Withdraw   by-default
             this.TransactionAmount = 0;
             this.TransactionDate = (DateTime.Now).ToString();
+            this.To = -1;
         }
 
 
@@ -23,8 +24,9 @@ namespace ATM_BObjects
         ///     Data Mmebers
         /// </summary>
         private int accountNo;
+        private int to;
         private int transactionType;   // 0-Withdraw,   1-Deposit,    2-Transfer
-        private long transactionAmount;
+        private int transactionAmount;
         private string transactiondate;        // The format for the date must always be Day/Month/Year [DD/MM/YYYY]
 
 
@@ -32,8 +34,9 @@ namespace ATM_BObjects
     ///     Getters and Setters
     /// </summary>
         public int TransactionType { get; set; }
-        public long TransactionAmount { get; set; }
+        public int TransactionAmount { get; set; }
         public string TransactionDate { get; set; }
         public int AccountNo { get; set; }
+        public int To { get; set; }
     }
 }

@@ -314,5 +314,27 @@ namespace ATM_VIEW
             };
         }
 
+
+        public static string GetDate(string msg)
+        {
+            statOver:
+            string date="12/12/2020";
+            date = getStringInput(msg);
+            string[] d = date.Split('/');
+            int dd, mm, yy;
+            try
+            {
+                dd = Convert.ToInt32(d[0]);
+                mm = Convert.ToInt32(d[1]);
+                yy = Convert.ToInt32(d[2]);
+            }
+            catch
+                {
+                goto statOver;
+            }
+
+            date = dd + "/" + mm + yy;
+            return date;
+        }
     }
 }
