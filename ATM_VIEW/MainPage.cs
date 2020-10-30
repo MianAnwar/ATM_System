@@ -135,7 +135,7 @@ namespace ATM_VIEW
                 }
                 else if (choice == 4)    // Search for Account
                 {
-                    //  ContinueToSearchAccount();
+                    ContinueToSearchAccount();
                     ReadKey();
                     goto AdminAgain;
                 }

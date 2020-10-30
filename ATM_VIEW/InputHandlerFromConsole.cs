@@ -210,5 +210,109 @@ namespace ATM_VIEW
                 Status = status,
             };
         }
+
+        public static Customer GetFieldsForSearchingAccounts()
+        {
+            WriteLine("\n\nSEARCH MENU::\n");
+
+            int accountNo;
+            do
+            {
+                Write("Account ID: ");
+                ForegroundColor = ConsoleColor.Cyan;
+                string inp = ReadLine();
+                if (inp == "")
+                {
+                    ForegroundColor = ConsoleColor.White;
+                    accountNo = -1;
+                    break;
+                }
+                if (!int.TryParse(inp, out accountNo))
+                {
+                    ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                else
+                {
+                    ForegroundColor = ConsoleColor.White;
+                    break;
+                }
+            } while (true);
+
+            string userId = "";
+            Write("\nUser ID: ");
+            ForegroundColor = ConsoleColor.Cyan;
+            userId = ReadLine();
+            ForegroundColor = ConsoleColor.White;
+
+            string holderName = "";
+            Write("\nHolder Name: ");
+            ForegroundColor = ConsoleColor.Cyan;
+            holderName = ReadLine();
+            ForegroundColor = ConsoleColor.White;
+
+            string type = "";
+            do
+            {
+                Write("Type (Saving, Current): ");
+                ForegroundColor = ConsoleColor.Cyan;
+                type = ReadLine();
+                ForegroundColor = ConsoleColor.White;
+                if (type == "")
+                    break;
+                type = type.ToLower();
+            } while (type != "saving" && type != "current");
+
+            int balance;
+            do
+            {
+                Write("Balance: ");
+                ForegroundColor = ConsoleColor.Cyan;
+                string inpp = ReadLine();
+                if (inpp == "")
+                {
+                    ForegroundColor = ConsoleColor.White;
+                    balance = -1;
+                    break;
+                }
+                if (!int.TryParse(inpp, out balance))
+                {
+                    ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                else
+                {
+                    ForegroundColor = ConsoleColor.White;
+                    break;
+                }
+
+                ForegroundColor = ConsoleColor.White;
+            } while (true);
+
+            string status = "";
+            do
+            {
+                Write("Status (Active, Disabled): ");
+                ForegroundColor = ConsoleColor.Cyan;
+                status = ReadLine();
+                ForegroundColor = ConsoleColor.White;
+                if (status == "")
+                    break;
+                status = status.ToLower();
+            } while (status != "active" && status != "disabled");
+
+            return new Customer
+            {
+                AccountNo = accountNo,
+                AccountHolderName = holderName,
+                AccountType= type,
+                AccountBalance= balance,
+                Status = status,
+                UserId = userId,
+                PinCode="",
+                UserPosition=true,
+            };
+        }
+
     }
 }

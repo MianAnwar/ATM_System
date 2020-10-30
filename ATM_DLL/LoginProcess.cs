@@ -19,7 +19,7 @@ namespace ATM_DLL
             {
                 StreamWriter sr = new StreamWriter(customerFile);
                 sr.WriteLine(1);
-                sr.WriteLine("1,11221,Ali,0,5000");    // accountNo = 11221, AccountHolderName = Ali, Type=Saving(0), Balance=5000
+                sr.WriteLine("1,1,Ali,0,5000");    // accountNo = 1, AccountHolderName = Ali, Type=Saving(0), Balance=5000
                 sr.Close();
             }
 
@@ -27,8 +27,9 @@ namespace ATM_DLL
             if (!File.Exists(usersFile))
             {
                 StreamWriter sr = new StreamWriter(usersFile, append: true);
-                sr.WriteLine(1);
+                sr.WriteLine(2);
                 sr.WriteLine("0,admin,11221,0,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
+                sr.WriteLine("1,ali,11222,1,1");    // userId=admin, pinCode=11221, position=0(Admin), Status=1(Active)
                 sr.Close();
             }
 
@@ -42,7 +43,9 @@ namespace ATM_DLL
             }
         }
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
         public int GetCountof(string fileName)
         {
@@ -110,7 +113,6 @@ namespace ATM_DLL
             return (count, users);
         }
 
-
         public int checkStatus(string userId)       // 1-Acive and 0-Disabled and -1-NotExists 
         {
             (int count, List<string> users) = GetStringListofUsers(usersFileName);
@@ -137,7 +139,6 @@ namespace ATM_DLL
             return -1; //  for NotExists.
         }
 
-
         public int checkPosition(string userId)     // 1-Customer and 2 for Admin
         {
             (int count, List<string> users) = GetStringListofUsers(usersFileName);
@@ -163,7 +164,6 @@ namespace ATM_DLL
             }
             return 0; //  for NotExists.
         }
-
 
         public void setDisabled(string userId)
         {
@@ -206,6 +206,10 @@ namespace ATM_DLL
             sr.Close();
         }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
         public bool verifyPinCode(string userId, string pinCode)
         {
@@ -234,6 +238,9 @@ namespace ATM_DLL
             return false; //  for NotExists.
         }
 
- ///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

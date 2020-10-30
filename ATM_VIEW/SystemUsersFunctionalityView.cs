@@ -11,7 +11,10 @@ namespace ATM_VIEW
         /// <summary>
         ///     Customer functionality for ATM_VIEW Layer
         /// </summary>
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
         void setAmount(ref int? withdraw_amount, int? withdrawChoice)
         {
             if (withdrawChoice == 1)  // 500
@@ -53,10 +56,20 @@ namespace ATM_VIEW
             int? withdraw_amount = 500;
             setAmount(ref withdraw_amount, withdrawChoice);
 
+            DoWithdrawing(Convert.ToInt32(withdraw_amount), currentUserId); // common method to deduct amount from account balance
+        }
+
+        ///// withdraw through Normal Mode
+        public void ContinueToWithdrawThroughNormalMode(string currentUserId)
+        {
+            int withdraw_amount = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(int.MinValue, int.MaxValue, "Enter the withdrawal amount: "));
+
             DoWithdrawing(withdraw_amount, currentUserId); // common method to deduct amount from account balance
         }
 
-        void DoWithdrawing(int? withdraw_amount, string currentUserId)
+
+
+        void DoWithdrawing(int withdraw_amount, string currentUserId)
         {
             char? choiceYN = InputHandlerFromConsole.GetYN($"Are you sure you want to withdraw Rs.{withdraw_amount} (Y/N)? ");
             if (choiceYN == 'y' || choiceYN == 'Y')
@@ -74,13 +87,10 @@ namespace ATM_VIEW
             }
         }
 
-        ///// withdraw through Normal Mode
-        public void ContinueToWithdrawThroughNormalMode(string currentUserId)
-        {
-            int? withdraw_amount = InputHandlerFromConsole.GetNumberInRange(int.MinValue, int.MaxValue, "Enter the withdrawal amount: ");
-
-            DoWithdrawing(withdraw_amount, currentUserId); // common method to deduct amount from account balance
-        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void ContinueToDespositAmount(string currentUserId)
         {
@@ -94,6 +104,10 @@ namespace ATM_VIEW
             }
         }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
         /////// transfer cash
         public void ContinueToTransferCash(string currentUserId)
@@ -124,6 +138,11 @@ namespace ATM_VIEW
                 WriteLine("Alas! You re-entered account number doesn't match. Press Any Key to go to main menu.");
             }
         }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void ContinueToViewBalance(string currentUserId)
         {

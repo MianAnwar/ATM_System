@@ -62,47 +62,33 @@ namespace ATM_BLL
                 dal.setDisabled(loginuser.UserId);
                 return -1;
             }
-
-            
             return 6;
-
-            /// first check whether this userId have status as Active or not
-            ///      if active then proceed and give the 3 chances
-            ///         otherwise return -1 ==> he have no chance to login 
-
-            /// int status = dal.checkstatus(userId);   -1 for disabled and 1 for active and 0 for NotExistsUserID
-            /// if(status ==-1) return -1
-            /// else if(status ==0) then return 0
-            ///  else if(status ==1) then continue 
-            ///{
-                
-            ////}
         }
 
-
-        /// <summary>
-        ///     Customer Functionality
-        /// </summary>
-        public void withdrawAmount(int? amount, string userId)
-        {
-            /////// dal.WithDrawAmount(amount, userId)  from the account
-            Console.WriteLine();
-        }
-
-
-        public bool feasibleToWithdraw(int? amount, string userId)
-        {
-            // READ from file of customer's account; the account balancee and compare the amount if difference 
-            // b/w balance amount is greater than zero then it will be feasible to withdraw
-            ////// otherwise false.
-
-            // return dal.checkWithdrawFeasibilityFor(amount,userId);
-            return true;
-        }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
         public void settingUp()
         {
             dal.SetUpSystem();
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>
+        ///     Customer Functionality
+        /// </summary>
+        public void withdrawAmount(int amount, string userId)
+        {
+            dal.withdrawAmount(amount, userId);
+        }
+
+        public bool feasibleToWithdraw(int amount, string userId)
+        {
+            return dal.feasibleToWithdraw(amount, userId);
         }
 
 
@@ -110,9 +96,9 @@ namespace ATM_BLL
         {
             return dal.GetBalance(accountNo);
         }
-        public int getAccountNo(string accountNo)
+        public int getAccountNo(string userId)
         {
-            return dal.getAccountNo(accountNo);
+            return dal.getAccountNo(userId);
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +130,10 @@ namespace ATM_BLL
             return dal.UpdateCustomer(updatedCustomer);
         }
 
+        public List<string> getSearchResult(Customer c)
+        {
+            return dal.getSearchResult(c);
+        }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -95,5 +95,18 @@ namespace ATM_VIEW
             }
         }
 
+        public void ContinueToSearchAccount()
+        {
+            Customer c = InputHandlerFromConsole.GetFieldsForSearchingAccounts();
+            List<string> result = new List<string>();
+            WriteLine("\n==== SEARCH RESULT ====");
+            WriteLine("Account ID \t User ID \t Holder Name \t\t Type \t\t Balance \t Status");
+            result = bll.getSearchResult(c);
+            foreach (string res in result)
+            {
+                WriteLine(res);
+            }
+
+        }
     }
 }
