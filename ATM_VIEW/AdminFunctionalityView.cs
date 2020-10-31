@@ -98,10 +98,15 @@ namespace ATM_VIEW
         public void ContinueToSearchAccount()
         {
             Customer c = InputHandlerFromConsole.GetFieldsForSearchingAccounts();
-            List<string> result = new List<string>();
+            List<string> result;
             WriteLine("\n==== SEARCH RESULTs ====");
-            WriteLine("Account ID \t User ID \t Holder Name \t\t Type \t\t Balance \t Status");
+            WriteLine("Account ID  User ID  Holder Name \t Type \t Balance  Status");
             result = bll.getSearchResult(c);
+            if (result == null)
+            {
+                WriteLine("==== No Found ====");
+                return;
+            }
             foreach (string res in result)
             {
                 WriteLine(res);

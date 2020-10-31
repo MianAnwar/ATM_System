@@ -215,29 +215,17 @@ namespace ATM_VIEW
         {
             WriteLine("\n\nSEARCH MENU::\n");
 
-            int accountNo;
-            do
-            {
-                Write("Account ID: ");
-                ForegroundColor = ConsoleColor.Cyan;
-                string inp = ReadLine();
-                if (inp == "")
-                {
-                    ForegroundColor = ConsoleColor.White;
-                    accountNo = -1;
-                    break;
-                }
-                if (!int.TryParse(inp, out accountNo))
-                {
-                    ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
-                else
-                {
-                    ForegroundColor = ConsoleColor.White;
-                    break;
-                }
-            } while (true);
+            Write("\nAccount ID: ");
+            int acc =0;
+            string accountNo;
+            ForegroundColor = ConsoleColor.Cyan;
+            accountNo = ReadLine();
+            ForegroundColor = ConsoleColor.White;
+            if (accountNo == "")
+                acc = -1;
+            else
+                acc = Convert.ToInt32(accountNo);
+
 
             string userId = "";
             Write("\nUser ID: ");
@@ -263,31 +251,17 @@ namespace ATM_VIEW
                 type = type.ToLower();
             } while (type != "saving" && type != "current");
 
+            Write("\nBalance: ");
             int balance;
-            do
-            {
-                Write("Balance: ");
-                ForegroundColor = ConsoleColor.Cyan;
-                string inpp = ReadLine();
-                if (inpp == "")
-                {
-                    ForegroundColor = ConsoleColor.White;
-                    balance = -1;
-                    break;
-                }
-                if (!int.TryParse(inpp, out balance))
-                {
-                    ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
-                else
-                {
-                    ForegroundColor = ConsoleColor.White;
-                    break;
-                }
+            string b;
+            ForegroundColor = ConsoleColor.Cyan;
+            b = ReadLine();
+            ForegroundColor = ConsoleColor.White;
+            if (b == "")
+                balance = -1;
+            else
+                balance = Convert.ToInt32(b);
 
-                ForegroundColor = ConsoleColor.White;
-            } while (true);
 
             string status = "";
             do
@@ -303,12 +277,12 @@ namespace ATM_VIEW
 
             return new Customer
             {
-                AccountNo = accountNo,
-                AccountHolderName = holderName,
-                AccountType= type,
-                AccountBalance= balance,
-                Status = status,
-                UserId = userId,
+                AccountNo = acc,//
+                AccountHolderName = holderName,//
+                AccountType= type,//
+                AccountBalance= balance,//
+                Status = status,//
+                UserId = userId,//
                 PinCode="",
                 UserPosition=true,
             };

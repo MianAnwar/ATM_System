@@ -130,7 +130,6 @@ namespace ATM_DLL
                     cust.AccountHolderName = data[2];
                     cust.AccountType = data[3].Equals("0") ? "saving" : "current";
                     cust.AccountBalance = Convert.ToInt32(data[4]);
-
                     
                     foreach (string u in users)
                     {
@@ -220,41 +219,718 @@ namespace ATM_DLL
         }
 
         //////////////      //////////////      //////////////
-        public List<string> getSearchResult(Customer c)
+        public List<string> getSearchResult(Customer c) //accNo, userId, holderName, type, balance, status, customerPosition(true)
         {
             List<string> result = new List<string>();
+            // agr sab empty aya howa hai tu yahin sy wapisi
+            if (c.AccountNo == -1 && c.AccountHolderName.Equals("") 
+                && c.AccountType.Equals("") && c.AccountBalance.Equals(-1)
+                && c.UserId.Equals("") && c.Status.Equals("")){
+                Console.WriteLine("--none--");
+                return null;
+            }
+
+            //get Customer for c's fields
             (int count, List<string> customers) = GetStringListofUsers(custFileName);
             (int users_count, List<string> users) = GetStringListofUsers(usersFileName);
 
-            if (count > 0 && customers != null)
+            for(int i=0; i<count; i++)
             {
-                foreach (string l in customers) // srNo, AccNo, Name, type, balance
+                string[] data = customers[i].Split(',');
+                string[] udata = users[i+1].Split(',');
+
+                Customer cust = new Customer();
+                string srNo = data[0];
+                cust.AccountNo = Convert.ToInt32(data[1]);
+                cust.AccountHolderName = data[2];
+                cust.AccountType = data[3].Equals("0") ? "saving" : "current";
+                cust.AccountBalance = Convert.ToInt32(data[4]);
+
+                cust.UserId = udata[1];
+                cust.PinCode = udata[2];
+                cust.UserPosition = udata[3].Equals("0") ? false : true;
+                cust.Status = udata[4].Equals("1") ? "active" : "disabled";
+
+              
+                if (c.AccountNo==-1)//then compare with rest of the fields
                 {
-                    string[] data = l.Split(',');
-                    if ((c.AccountNo.Equals(Convert.ToInt32(data[1]))))
+                    if(c.UserId.Equals("")) // then then compare with rest of the fields
                     {
-                        
+                        if(c.AccountHolderName.Equals(""))//then compare with rest of the fields
+                        {
+                            if(c.AccountType.Equals(""))//then compare with rest of the fields
+                            {
+                                if( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                {
+                                    if(c.Status.Equals(""))//then //no more fields: not a choice
+                                    {
+                                        //don't add anything/// sab empty hai
+                                    }
+                                    else
+                                    {   //////add   /// sirf status aya hai
+                                        if(c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                        {
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if(c.AccountBalance.Equals(cust.AccountBalance))
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                        }
+                                        else
+                                        {   //////add
+                                            if (c.Status.Equals(cust.Status))
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if(c.AccountType.Equals(cust.AccountType))
+                                {
+                                    if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                        }
+                                        else
+                                        {   //////add   /// sirf status aya hai
+                                            if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountBalance.Equals(cust.AccountBalance))
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add
+                                                if (c.Status.Equals(cust.Status))
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (c.AccountType.Equals(""))//then compare with rest of the fields
+                            {
+                                if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                {
+                                    if (c.Status.Equals(""))//then //no more fields: not a choice
+                                    {
+                                        //don't add anything/// sab empty hai
+                                    }
+                                    else
+                                    {   //////add   /// sirf status aya hai
+                                        if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                        {
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.AccountBalance.Equals(cust.AccountBalance))
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                        }
+                                        else
+                                        {   //////add
+                                            if (c.Status.Equals(cust.Status))
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (c.AccountType.Equals(cust.AccountType))
+                                {
+                                    if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                        }
+                                        else
+                                        {   //////add   /// sirf status aya hai
+                                            if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountBalance.Equals(cust.AccountBalance))
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add
+                                                if (c.Status.Equals(cust.Status))
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        
+                        if (c.UserId.Equals(cust.UserId))
+                        {
+                            if (c.AccountHolderName.Equals(""))//then compare with rest of the fields
+                            {
+                                if (c.AccountType.Equals(""))//then compare with rest of the fields
+                                {
+                                    if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            //don't add anything/// sab empty hai
+                                        }
+                                        else
+                                        {   //////add   /// sirf status aya hai
+                                            if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountBalance.Equals(cust.AccountBalance))
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add
+                                                if (c.Status.Equals(cust.Status))
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.AccountType.Equals(cust.AccountType))
+                                    {
+                                        if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add   /// sirf status aya hai
+                                                if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (c.AccountBalance.Equals(cust.AccountBalance))
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add
+                                                    if (c.Status.Equals(cust.Status))
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (c.AccountType.Equals(""))//then compare with rest of the fields
+                                {
+                                    if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            //don't add anything/// sab empty hai
+                                        }
+                                        else
+                                        {   //////add   /// sirf status aya hai
+                                            if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountBalance.Equals(cust.AccountBalance))
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add
+                                                if (c.Status.Equals(cust.Status))
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.AccountType.Equals(cust.AccountType))
+                                    {
+                                        if ( c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add   /// sirf status aya hai
+                                                if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (c.AccountBalance.Equals(cust.AccountBalance))
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add
+                                                    if (c.Status.Equals(cust.Status))
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                foreach (string u in users) // srNo, userId, Pincode, position, status
+                else  ///// Add with the 
                 {
-                    string[] udata = u.Split(',');
-                    if (!(c.AccountNo.Equals(Convert.ToInt32(udata[0]))))
+                    if(c.AccountNo.Equals(cust.AccountNo))
                     {
-                        
-                    }
-                    else
-                    {
-                        
+                        if (c.UserId.Equals("")) // then then compare with rest of the fields
+                        {
+                            if (c.AccountHolderName.Equals(""))//then compare with rest of the fields
+                            {
+                                if (c.AccountType.Equals(""))//then compare with rest of the fields
+                                {
+                                    if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            //don't add anything/// sab empty hai
+                                        }
+                                        else
+                                        {   //////add   /// sirf status aya hai
+                                            if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountBalance.Equals(cust.AccountBalance))
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add
+                                                if (c.Status.Equals(cust.Status))
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.AccountType.Equals(cust.AccountType))
+                                    {
+                                        if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add   /// sirf status aya hai
+                                                if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (c.AccountBalance.Equals(cust.AccountBalance))
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add
+                                                    if (c.Status.Equals(cust.Status))
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (c.AccountType.Equals(""))//then compare with rest of the fields
+                                {
+                                    if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                    {
+                                        if (c.Status.Equals(""))//then //no more fields: not a choice
+                                        {
+                                            //don't add anything/// sab empty hai
+                                        }
+                                        else
+                                        {   //////add   /// sirf status aya hai
+                                            if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountBalance.Equals(cust.AccountBalance))
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add
+                                                if (c.Status.Equals(cust.Status))
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.AccountType.Equals(cust.AccountType))
+                                    {
+                                        if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                            }
+                                            else
+                                            {   //////add   /// sirf status aya hai
+                                                if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (c.AccountBalance.Equals(cust.AccountBalance))
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add
+                                                    if (c.Status.Equals(cust.Status))
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (c.UserId.Equals(cust.UserId))
+                            {
+                                if (c.AccountHolderName.Equals(""))//then compare with rest of the fields
+                                {
+                                    if (c.AccountType.Equals(""))//then compare with rest of the fields
+                                    {
+                                        if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                //don't add anything/// sab empty hai
+                                            }
+                                            else
+                                            {   //////add   /// sirf status aya hai
+                                                if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (c.AccountBalance.Equals(cust.AccountBalance))
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add
+                                                    if (c.Status.Equals(cust.Status))
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountType.Equals(cust.AccountType))
+                                        {
+                                            if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add   /// sirf status aya hai
+                                                    if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (c.AccountBalance.Equals(cust.AccountBalance))
+                                                {
+                                                    if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                    else
+                                                    {   //////add
+                                                        if (c.Status.Equals(cust.Status))
+                                                        {
+                                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.AccountType.Equals(""))//then compare with rest of the fields
+                                    {
+                                        if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                        {
+                                            if (c.Status.Equals(""))//then //no more fields: not a choice
+                                            {
+                                                //don't add anything/// sab empty hai
+                                            }
+                                            else
+                                            {   //////add   /// sirf status aya hai
+                                                if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (c.AccountBalance.Equals(cust.AccountBalance))
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add
+                                                    if (c.Status.Equals(cust.Status))
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.AccountType.Equals(cust.AccountType))
+                                        {
+                                            if (c.AccountBalance.Equals(-1))//then compare with rest of the fields
+                                            {
+                                                if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                {
+                                                    if (cust.UserPosition.Equals(c.UserPosition))
+                                                        result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                }
+                                                else
+                                                {   //////add   /// sirf status aya hai
+                                                    if (c.Status.Equals(cust.Status))       /// agr equal howa tu add
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (c.AccountBalance.Equals(cust.AccountBalance))
+                                                {
+                                                    if (c.Status.Equals(""))//then //no more fields: not a choice
+                                                    {
+                                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                    }
+                                                    else
+                                                    {   //////add
+                                                        if (c.Status.Equals(cust.Status))
+                                                        {
+                                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                return result;
+
             }
-            return null;
+
+            return result;           
         }
 
         public List<string> getSearchResultBTbalance(int minBalance, int maxBalance)
@@ -268,26 +944,10 @@ namespace ATM_DLL
                 foreach (string l in customers) // srNo, AccNo, Name, type, balance
                 {
                     string[] data = l.Split(',');
-                    if ((c.AccountNo.Equals(Convert.ToInt32(data[1]))))
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
                 }
                 foreach (string u in users) // srNo, userId, Pincode, position, status
                 {
                     string[] udata = u.Split(',');
-                    if (!(c.AccountNo.Equals(Convert.ToInt32(udata[0]))))
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
                 }
                 return result;
             }
@@ -305,26 +965,10 @@ namespace ATM_DLL
                 foreach (string l in customers) // srNo, AccNo, Name, type, balance
                 {
                     string[] data = l.Split(',');
-                    if ((c.AccountNo.Equals(Convert.ToInt32(data[1]))))
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
                 }
                 foreach (string u in users) // srNo, userId, Pincode, position, status
                 {
                     string[] udata = u.Split(',');
-                    if (!(c.AccountNo.Equals(Convert.ToInt32(udata[0]))))
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
                 }
                 return result;
             }
