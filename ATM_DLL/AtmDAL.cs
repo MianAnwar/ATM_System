@@ -345,7 +345,8 @@ namespace ATM_DLL
                                 {
                                     if (c.Status.Equals(""))//then //no more fields: not a choice
                                     {
-                                        //don't add anything/// sab empty hai
+                                        if (cust.UserPosition.Equals(c.UserPosition))
+                                            result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                     }
                                     else
                                     {   //////add   /// sirf status aya hai
@@ -431,7 +432,8 @@ namespace ATM_DLL
                                     {
                                         if (c.Status.Equals(""))//then //no more fields: not a choice
                                         {
-                                            //don't add anything/// sab empty hai
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                         }
                                         else
                                         {   //////add   /// sirf status aya hai
@@ -512,7 +514,8 @@ namespace ATM_DLL
                                     {
                                         if (c.Status.Equals(""))//then //no more fields: not a choice
                                         {
-                                            //don't add anything/// sab empty hai
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                         }
                                         else
                                         {   //////add   /// sirf status aya hai
@@ -602,7 +605,8 @@ namespace ATM_DLL
                                     {
                                         if (c.Status.Equals(""))//then //no more fields: not a choice
                                         {
-                                            //don't add anything/// sab empty hai
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                         }
                                         else
                                         {   //////add   /// sirf status aya hai
@@ -683,7 +687,8 @@ namespace ATM_DLL
                                     {
                                         if (c.Status.Equals(""))//then //no more fields: not a choice
                                         {
-                                            //don't add anything/// sab empty hai
+                                            if (cust.UserPosition.Equals(c.UserPosition))
+                                                result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                         }
                                         else
                                         {   //////add   /// sirf status aya hai
@@ -769,7 +774,8 @@ namespace ATM_DLL
                                         {
                                             if (c.Status.Equals(""))//then //no more fields: not a choice
                                             {
-                                                //don't add anything/// sab empty hai
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                             }
                                             else
                                             {   //////add   /// sirf status aya hai
@@ -850,7 +856,8 @@ namespace ATM_DLL
                                         {
                                             if (c.Status.Equals(""))//then //no more fields: not a choice
                                             {
-                                                //don't add anything/// sab empty hai
+                                                if (cust.UserPosition.Equals(c.UserPosition))
+                                                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                                             }
                                             else
                                             {   //////add   /// sirf status aya hai
