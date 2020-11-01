@@ -1010,25 +1010,27 @@ namespace ATM_DLL
             int mm2 = Convert.ToInt32(date2[1]);
             int yy2 = Convert.ToInt32(date2[2]);
 
-            if(yy>=yy2)
+            
+            if (yy>yy2)
             {
                 return true;
             }
-            else  // warna 
+            else if(yy==yy2) // warna 
             {
-                if(mm>=mm2)
+                
+                if(mm>mm2)
                 {
                     return true;
                 }
-                else
+                else if(mm==mm2)
                 {
                     if(dd>=dd2)
                     {
                         return true;
                     }
-                    return false;
                 }
             }
+            return false;
         }
 
         public bool lessOREqual(string d1, string d2)
@@ -1043,25 +1045,27 @@ namespace ATM_DLL
             int mm2 = Convert.ToInt32(date2[1]);
             int yy2 = Convert.ToInt32(date2[2]);
 
-            if (yy <= yy2)
+
+            if (yy < yy2)
             {
                 return true;
             }
-            else  // warna 
+            else if (yy == yy2) // warna 
             {
-                if (mm <= mm2)
+
+                if (mm < mm2)
                 {
                     return true;
                 }
-                else
+                else if (mm == mm2)
                 {
                     if (dd <= dd2)
                     {
                         return true;
                     }
-                    return false;
                 }
             }
+            return false;
         }
 
         public bool equals(string d1, string d2)
@@ -1104,6 +1108,7 @@ namespace ATM_DLL
                 else
                     tr.To = -1;
                 
+
                 if (greaterOREqual(tr.TransactionDate, startingDate) && lessOREqual(tr.TransactionDate, endingDate) )
                 {
                     string type = tr.TransactionType==0 ? "Cash Withdrawal" : tr.TransactionType==1? "Cash Deposit" : "Cash Transfer";
@@ -1156,7 +1161,10 @@ namespace ATM_DLL
             return -1;
         }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
         public int getUsedLimit(int accountNo, string today)
         {
             (int count, List<string> limits) = GetStringListofUsers(limitFileName);
@@ -1204,7 +1212,6 @@ namespace ATM_DLL
             }
             return;
         }
-
 
         public void updateLimit(int accountNo, int amount)
         {

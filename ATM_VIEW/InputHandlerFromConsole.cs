@@ -299,8 +299,14 @@ namespace ATM_VIEW
             try
             {
                 dd = Convert.ToInt32(d[0]);
+                if (dd < 1 && dd > 31)
+                    goto statOver;
                 mm = Convert.ToInt32(d[1]);
+                if (dd < 1 && dd > 12)
+                    goto statOver;
                 yy = Convert.ToInt32(d[2]);
+                if (dd < 1914 && dd > 2030)
+                    goto statOver;
             }
             catch
                 {
