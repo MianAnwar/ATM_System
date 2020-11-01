@@ -307,7 +307,7 @@ namespace ATM_VIEW
                 goto statOver;
             }
 
-            date = dd + "/" + mm + yy;
+            date = dd + "/" + mm +"/" + yy;
             return date;
         }
     }

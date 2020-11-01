@@ -80,6 +80,25 @@ namespace ATM_DLL
             return "";
         }
 
+
+        public string getUserIdWithAccountNo(int accountNo)
+        {
+            (int count, List<string> users) = GetStringListofUsers(usersFileName);
+
+            if (count > 0 && users != null)
+            {
+                foreach (string l in users)
+                {
+                    string[] data = l.Split(',');
+                    if (accountNo.Equals(Convert.ToInt32(data[0])))
+                    {
+                        return data[1];
+                    }
+                }
+            }
+            return "";
+        }
+
         public bool DeleteAccount(int accountNo)
         {
             (int count, List<string> customers) = GetStringListofUsers(custFileName);
@@ -218,14 +237,17 @@ namespace ATM_DLL
             return false;
         }
 
-        //////////////      //////////////      //////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
         public List<string> getSearchResult(Customer c) //accNo, userId, holderName, type, balance, status, customerPosition(true)
         {
             List<string> result = new List<string>();
             // agr sab empty aya howa hai tu yahin sy wapisi
             if (c.AccountNo == -1 && c.AccountHolderName.Equals("") 
                 && c.AccountType.Equals("") && c.AccountBalance.Equals(-1)
-                && c.UserId.Equals("") && c.Status.Equals("")){
+                && c.UserId.Equals("") && c.Status.Equals(""))
+            {
                 Console.WriteLine("--none--");
                 return null;
             }
@@ -934,11 +956,13 @@ namespace ATM_DLL
                         }
                     }
                 }
-
             }
-
             return result;           
         }
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
         public List<string> getSearchResultBTbalance(int minBalance, int maxBalance)
         {
@@ -946,46 +970,156 @@ namespace ATM_DLL
             (int count, List<string> customers) = GetStringListofUsers(custFileName);
             (int users_count, List<string> users) = GetStringListofUsers(usersFileName);
 
-            if (count > 0 && customers != null)
+
+            for (int i = 0; i < count; i++)
             {
-                foreach (string l in customers) // srNo, AccNo, Name, type, balance
+                string[] data = customers[i].Split(',');
+                string[] udata = users[i + 1].Split(',');
+
+                Customer cust = new Customer();
+                string srNo = data[0];
+                cust.AccountNo = Convert.ToInt32(data[1]);
+                cust.AccountHolderName = data[2];
+                cust.AccountType = data[3].Equals("0") ? "saving" : "current";
+                cust.AccountBalance = Convert.ToInt32(data[4]);
+
+                cust.UserId = udata[1];
+                cust.PinCode = udata[2];
+                cust.UserPosition = udata[3].Equals("0") ? false : true;
+                cust.Status = udata[4].Equals("1") ? "active" : "disabled";
+
+                if (Convert.ToInt32(data[4]) >=minBalance && Convert.ToInt32(data[4]) <= maxBalance)
                 {
-                    string[] data = l.Split(',');
+                    result.Add($"{cust.AccountNo}\t {cust.UserId}\t {cust.AccountHolderName}\t {cust.AccountType}\t {cust.AccountBalance}\t {cust.Status}\n");
                 }
-                foreach (string u in users) // srNo, userId, Pincode, position, status
-                {
-                    string[] udata = u.Split(',');
-                }
-                return result;
+
             }
-            return null;
+            return result;
+        }
+
+
+        public bool greaterOREqual(string d1, string d2)
+        {
+            string[] date1 = d1.Split('/');
+            int dd = Convert.ToInt32(date1[0]);
+            int mm = Convert.ToInt32(date1[1]);
+            int yy = Convert.ToInt32(date1[2]);
+
+            string[] date2 = d2.Split('/');
+            int dd2 = Convert.ToInt32(date2[0]);
+            int mm2 = Convert.ToInt32(date2[1]);
+            int yy2 = Convert.ToInt32(date2[2]);
+
+            if(yy>=yy2)
+            {
+                return true;
+            }
+            else  // warna 
+            {
+                if(mm>=mm2)
+                {
+                    return true;
+                }
+                else
+                {
+                    if(dd>=dd2)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+
+        public bool lessOREqual(string d1, string d2)
+        {
+            string[] date1 = d1.Split('/');
+            int dd = Convert.ToInt32(date1[0]);
+            int mm = Convert.ToInt32(date1[1]);
+            int yy = Convert.ToInt32(date1[2]);
+
+            string[] date2 = d2.Split('/');
+            int dd2 = Convert.ToInt32(date2[0]);
+            int mm2 = Convert.ToInt32(date2[1]);
+            int yy2 = Convert.ToInt32(date2[2]);
+
+            if (yy <= yy2)
+            {
+                return true;
+            }
+            else  // warna 
+            {
+                if (mm <= mm2)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (dd <= dd2)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+
+        public bool equals(string d1, string d2)
+        {
+            string[] date1 = d1.Split('/');
+            int dd = Convert.ToInt32(date1[0]);
+            int mm = Convert.ToInt32(date1[1]);
+            int yy = Convert.ToInt32(date1[2]);
+
+            string[] date2 = d2.Split('/');
+            int dd2 = Convert.ToInt32(date2[0]);
+            int mm2 = Convert.ToInt32(date2[1]);
+            int yy2 = Convert.ToInt32(date2[2]);
+
+            if (yy == yy2 && mm==mm2 && dd==dd2)
+            {
+                return true;
+            }
+            return false;
         }
 
         public List<string> getSearchResultBTdates(string startingDate, string endingDate)
         {
             List<string> result = new List<string>();
-            (int count, List<string> customers) = GetStringListofUsers(custFileName);
-            (int users_count, List<string> users) = GetStringListofUsers(usersFileName);
+            (int trans_count, List<string> trans) = GetStringListofUsers(transactionFileName);
 
-            if (count > 0 && customers != null)
+            foreach(string t in trans)
             {
-                foreach (string l in customers) // srNo, AccNo, Name, type, balance
+                // accountNo = 11221, TransactionType = 0, Amount=5000, Date=12/09/2020, To=accNo
+                  //              0-withdraw, 1-Deposit, 2-Transfer
+                string[] data = t.Split(',');
+                Transaction tr = new Transaction();
+                tr.AccountNo = Convert.ToInt32(data[0]);
+
+                tr.TransactionType = Convert.ToInt32(data[1]);  //0-withdraw, 1-Deposit, 2-Transfer
+                tr.TransactionAmount = Convert.ToInt32(data[2]);
+                tr.TransactionDate = data[3];
+                if (tr.TransactionType == 2)
+                    tr.To = Convert.ToInt32(data[2]);
+                else
+                    tr.To = -1;
+                
+                if (greaterOREqual(tr.TransactionDate, startingDate) && lessOREqual(tr.TransactionDate, endingDate) )
                 {
-                    string[] data = l.Split(',');
+                    string type = tr.TransactionType==0 ? "Cash Withdrawal" : tr.TransactionType==1? "Cash Deposit" : "Cash Transfer";
+                    if(tr.TransactionType!=2)
+                        result.Add($"\n{type}, {getUserIdWithAccountNo(tr.AccountNo)}, {getAccountHolderNameWithAccountNo(tr.AccountNo)}, {tr.TransactionAmount}, {tr.TransactionDate}");
+                    else
+                        result.Add($"\n{type}, {getUserIdWithAccountNo(tr.AccountNo)}, {getAccountHolderNameWithAccountNo(tr.AccountNo)}, {tr.TransactionAmount}, {tr.TransactionDate}, {tr.To}");
                 }
-                foreach (string u in users) // srNo, userId, Pincode, position, status
-                {
-                    string[] udata = u.Split(',');
-                }
-                return result;
             }
-            return null;
+            return result;
         }
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
         public int GetBalance(int accountNo)
         {
             (int count, List<string> customers) = GetStringListofUsers(custFileName);
@@ -1003,7 +1137,6 @@ namespace ATM_DLL
             }
             return -1;
         }
-
 
         public int getAccountNo(string userid)
         {
@@ -1023,17 +1156,95 @@ namespace ATM_DLL
             return -1;
         }
 
+
+        public int getUsedLimit(int accountNo, string today)
+        {
+            (int count, List<string> limits) = GetStringListofUsers(limitFileName);
+            int i = 0;
+            if (count > 0 && limits != null)
+            {
+                foreach (string l in limits)
+                {
+                    if (i == 0)
+                    {
+                        i++;
+                        continue;
+                    }
+                    string[] data = l.Split(',');
+                    if (accountNo.Equals(Convert.ToInt32(data[0])) && equals(today, data[1]))
+                    {
+                        return Convert.ToInt32(data[2]);
+                    }
+                }
+                // not exits , so set it.
+                setLimit(accountNo);    // for today
+                return 0;
+            }
+            return -1;
+        }
+
+        public void setLimit(int accountNo, int limit=0) //for today
+        {
+            // write to file for getToday();
+            string details = $"{accountNo}, {getToday()}, {limit}";
+            string limitFile = Path.Combine(Environment.CurrentDirectory, limitFileName);
+            StreamWriter srLimit = null;
+            try
+            {
+                srLimit = new StreamWriter(limitFile, append: true);
+                srLimit.WriteLine(details);
+            }
+            catch
+            {
+                Console.WriteLine("Exception at updating Limit history file.");
+            }
+            finally
+            {
+                srLimit.Close();
+            }
+            return;
+        }
+
+
+        public void updateLimit(int accountNo, int amount)
+        {
+            (int count, List<string> limits) = GetStringListofUsers(limitFileName);
+            List<string> updatedLimits = new List<string>();
+            if (count > 0 && limits != null)
+            {
+                foreach (string l in limits)
+                {
+                    string[] data = l.Split(',');
+                    if ((accountNo.Equals(Convert.ToInt32(data[0])) && equals(getToday(), data[1])))
+                    {
+                        int newUsedLimit = Convert.ToInt32(data[2]) + amount;
+                        updatedLimits.Add($"{accountNo},{getToday()},{newUsedLimit}");
+                    }
+                    else
+                    {
+                        updatedLimits.Add(l);
+                    }
+                }
+                writeBacktoFile(count, updatedLimits, limitFileName);
+            }
+        }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
         public bool DepositAmount(int accountNo, int amountToDeposit)
         {
             bool res = doDepositAmount(accountNo, amountToDeposit);
 
+            string dd = DateTime.Now.Day.ToString();
+            string mm = DateTime.Now.Month.ToString();
+            string yy = DateTime.Now.Year.ToString();
+
+            string date = dd + "/" + mm + "/" + yy;
+
             Transaction wT = new Transaction();
             wT.AccountNo = accountNo;
             wT.TransactionType = 1; // 1 for deposit
             wT.TransactionAmount = amountToDeposit;
-            wT.TransactionDate = DateTime.Now.ToString();
+            wT.TransactionDate = date;
             saveTransaction(wT);
 
             return res;
@@ -1058,11 +1269,18 @@ namespace ATM_DLL
             doWithdrawAmount(from, amountToTransfer);
             bool res = doDepositAmount(accountNo, amountToTransfer);
 
+            string dd = DateTime.Now.Day.ToString();
+            string mm = DateTime.Now.Month.ToString();
+            string yy = DateTime.Now.Year.ToString();
+
+            string date = dd + "/" + mm + "/" + yy;
+
+
             Transaction wT = new Transaction();
             wT.AccountNo = from;
             wT.TransactionType = 2; // 2 for Transfer
             wT.TransactionAmount = amountToTransfer;
-            wT.TransactionDate = DateTime.Now.ToString();
+            wT.TransactionDate = date;
             wT.To = accountNo;
             saveTransaction(wT);
 
@@ -1087,16 +1305,51 @@ namespace ATM_DLL
             return false;            
         }
 
+
+        public bool checkWithdrawLimit(int amount, string userId)
+        {
+            if (amount > 20000)
+                return false;
+            int accountNo = getAccountNo(userId);
+            int used_limit = getUsedLimit(accountNo, getToday());
+            
+            if (used_limit == 20000)
+            {
+                return false;
+            }
+            else
+            {
+                int afterLimit = used_limit + amount;
+                if (afterLimit > 20000)
+                    return false;
+                else
+                    return true;
+            }
+        }
+
+        string getToday()
+        {
+            string dd = DateTime.Now.Day.ToString();
+            string mm = DateTime.Now.Month.ToString();
+            string yy = DateTime.Now.Year.ToString();
+
+            return dd + "/" + mm + "/" + yy;
+        }
+
         public void withdrawAmount(int amount, string userId)
         {
             int accountNo = getAccountNo(userId);
             doWithdrawAmount(accountNo, amount);
 
+            
+            updateLimit(accountNo, amount);
+            string date = getToday();
+
             Transaction wT = new Transaction();
             wT.AccountNo = accountNo;
             wT.TransactionType = 0; // 0 for Withdraw
             wT.TransactionAmount = amount;
-            wT.TransactionDate = DateTime.Now.ToString();
+            wT.TransactionDate = date;
             saveTransaction(wT);
         }
 

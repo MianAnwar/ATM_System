@@ -6,16 +6,15 @@ namespace ATM_BObjects
 {
     public class Transaction
     {
-
-    /// <summary>
-    ///     Constructor
-    /// </summary>
+       /// <summary>
+        ///     Constructor
+        /// </summary>
         public Transaction()
         {
             this.AccountNo = 0;
             this.TransactionType = 1;   // Withdraw   by-default
             this.TransactionAmount = 0;
-            this.TransactionDate = (DateTime.Now).ToString();
+            this.TransactionDate = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString();
             this.To = -1;
         }
 

@@ -22,9 +22,11 @@ namespace ATM_VIEW
 
         public static void DisplayBalancePage(int accountNo, int balance, string time)
         {
-            WriteLine($"Account No.: {accountNo}");
-            WriteLine($"Time: {time}");
-            WriteLine($"Balance: {balance}");
+            WriteLine("\n\n=====================================");
+            WriteLine($"\tAccount No.: {accountNo}");
+            WriteLine($"\tTime: {time}");
+            WriteLine($"\tBalance: {balance}");
+            WriteLine("=====================================");
         }
     }
 

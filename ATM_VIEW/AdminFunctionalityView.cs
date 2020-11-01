@@ -27,6 +27,9 @@ namespace ATM_VIEW
             }
         }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
         public void ContinueToDeleteAccount()
         {
             int accountNo1 = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter the account number to which you want to delete: "));
@@ -48,6 +51,9 @@ namespace ATM_VIEW
             }
         }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
         public void ContinueToUpdateAccount()
         {
             int accountNo = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(1, int.MaxValue, "Enter the Account Number: "));
@@ -95,6 +101,9 @@ namespace ATM_VIEW
             }
         }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
         public void ContinueToSearchAccount()
         {
             Customer c = InputHandlerFromConsole.GetFieldsForSearchingAccounts();
@@ -113,6 +122,9 @@ namespace ATM_VIEW
             }
         }
 
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
         public void ContinueToViewCustomersReports()
         {
             int minBalance = Convert.ToInt32(InputHandlerFromConsole.GetNumberInRange(0, int.MaxValue, "Enter minimum amount: "));
@@ -122,6 +134,11 @@ namespace ATM_VIEW
             WriteLine("\n==== SEARCH RESULTs ====");
             WriteLine("Account ID \t User ID \t Holder Name \t\t Type \t\t Balance \t Status");
             result = bll.getSearchResultBTbalance(minBalance, maxBalance);
+            if (result == null)
+            {
+                WriteLine("==== No Found ====");
+                return;
+            }
             foreach (string res in result)
             {
                 WriteLine(res);
@@ -132,15 +149,28 @@ namespace ATM_VIEW
         {
             string startingDate = InputHandlerFromConsole.GetDate("Enter the starting date (dd/mm/yyyy): ");
             string endingDate = InputHandlerFromConsole.GetDate("Enter the ending date (dd/mm/yyyy): ");
-
+            Console.WriteLine(startingDate);
+            Console.WriteLine(endingDate);
+            
             List<string> result = new List<string>();
             WriteLine("\n==== SEARCH RESULTs ====");
-            WriteLine("Transaction Type \t User ID \t Holder Name \t\t Type \t\t Amount \t Date");
+            ForegroundColor = ConsoleColor.DarkGreen;
+            WriteLine("Transaction Type, User ID, Holder Name, Type, Amount, Date, TO whom: if Transfer");
+            ForegroundColor = ConsoleColor.White;
             result = bll.getSearchResultBTdates(startingDate, endingDate);
+            if (result == null)
+            {
+                WriteLine("==== No Found ====");
+                return;
+            }
             foreach (string res in result)
             {
                 WriteLine(res);
             }
         }
+
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
     }
 }

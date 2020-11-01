@@ -11,6 +11,7 @@ namespace ATM_DLL
         protected string custFileName = "customer.csv";
         protected string usersFileName = "users.csv";
         protected string transactionFileName = "transaction.csv";
+        protected string limitFileName = "limits.csv";
 
         public void SetUpSystem()
         {
@@ -40,6 +41,15 @@ namespace ATM_DLL
                 sr.WriteLine(1);
                 sr.WriteLine("1,2,500,15-Oct-20, 2");    // accountNo = 11221, TransactionType = 0, Amount=5000, Date=12/09/2020, To=accNo
                 sr.Close();                                 //              0-withdraw, 1-Deposit, 2-Transfer
+            }
+
+            string limitFile = Path.Combine(Environment.CurrentDirectory, limitFileName);
+            if (!File.Exists(limitFile))
+            {
+                StreamWriter sr = new StreamWriter(limitFile);
+                sr.WriteLine(1);
+                sr.WriteLine("1,15/5/2020, 100");    // accountNo = 11221, date = 0, limitUsed=5000
+                sr.Close();
             }
         }
 

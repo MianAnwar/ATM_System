@@ -91,6 +91,10 @@ namespace ATM_BLL
             return dal.feasibleToWithdraw(amount, userId);
         }
 
+        public bool checkWithdrawLimit(int amount, string userId)
+        {
+            return dal.checkWithdrawLimit(amount, userId);
+        }
 
         public int GetBalance(int accountNo)
         {
